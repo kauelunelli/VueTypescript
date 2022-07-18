@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <ListProducts :products="products" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import ListProducts from "@/components/ListProducts.vue";
+import Product from "../services/product";
 
 @Component({
   components: {
-    HelloWorld,
+    ListProducts,
   },
 })
-export default class HomeView extends Vue {}
+export default class HomeView extends Vue {
+  public products = [];
+
+  async mounted() {
+    try {
+      const response = await Product.list();
+      this.products = response.data;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log(this.products);
+    }
+  }
+}
 </script>
