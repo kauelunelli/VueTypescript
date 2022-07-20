@@ -15,17 +15,18 @@
         <p>{{ product.brand }}</p>
         <p>{{ product.price }}</p>
         <div class="container-svg">
-          <a><img :src="editSVG" /></a>
+          <a @click="sendProductToEdit(product)"><img :src="editSVG" /></a>
         </div>
         <div class="container-svg">
-          <a><img :src="deleteSVG" /></a>
+          <a @click="sendIdToDelete(product.id)"><img :src="deleteSVG" /></a>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
+import product from "../services/product";
 
 @Component
 export default class ListProducts extends Vue {
@@ -37,6 +38,16 @@ export default class ListProducts extends Vue {
     },
   })
   products!: Array<any>;
+  @Emit("send-id-to-delete")
+  public sendIdToDelete(id: number) {
+    return id;
+  }
+
+  @Emit("send-product-to-edit")
+  public sendProductToEdit(product: Array<any>) {
+    return product;
+  }
+
   public editSVG = require("../assets/edit.svg");
   public deleteSVG = require("../assets/delete.svg");
 }
