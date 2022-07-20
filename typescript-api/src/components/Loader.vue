@@ -11,7 +11,7 @@ export default class Loader extends Vue {}
 <style scoped>
 .loader-container {
   position: fixed;
-  z-index: 9998;
+  z-index: 9999;
   top: 0;
   left: 0;
   width: 100%;
