@@ -66,13 +66,12 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Emit, Vue } from "vue-property-decorator";
-import { Store } from 'vuex'
-import product from "../services/product";
+import { IProduct } from "./types";
 @Component
-export default class RegisterProduct extends Vue {
-  @Prop() readonly editProduct!: Array<any>;
+export default class ModalProduct extends Vue {
+  @Prop() readonly editProduct!: IProduct;
 
-  private product = {
+  private product: IProduct = {
     product: "",
     description: "",
     categories: "",

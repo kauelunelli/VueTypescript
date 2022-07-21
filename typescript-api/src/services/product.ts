@@ -1,19 +1,20 @@
 import { http } from "./config";
+import { IProduct } from "../components/types";
 
 export default {
   list: () => {
     return http.get("products");
   },
 
-  save: (product: Array<any>) => {
+  save: (product: IProduct) => {
     return http.post("products", product);
   },
 
-  edit: (id: number, product: Array<any>) => {
+  edit: (id: number, product: IProduct) => {
     return http.put("products/" + id, product);
   },
 
-  delete: (product: number) => {
-    return http.delete("products/" + product);
+  delete: (id: number) => {
+    return http.delete("products/" + id);
   },
 };

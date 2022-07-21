@@ -1,21 +1,23 @@
 <template>
   <div class="home">
     <div class="button-container">
-      <button class="btn" @click="openRegister">Cadastrar Novo Produto</button>
+      <button class="btn" @click="openModalProduct">
+        Cadastrar Novo Produto
+      </button>
     </div>
     <MessageSucess
       v-if="showSucessMessage"
-      @close-sucess-message="closeSucessMessage"
       :msg="msg"
+      @close-sucess-message="closeSucessMessage"
     />
     <Loader v-if="isLoading" />
     <ListProducts
-      @send-id-to-delete="deleteProduct($event)"
       :products="products"
-      @send-product-to-edit="openRegister($event)"
+      @send-id-to-delete="deleteProduct($event)"
+      @send-product-to-edit="openModalProduct($event)"
     />
-    <RegisterProduct
-      v-if="showRegister"
+    <ModalProduct
+      v-if="showModalProduct"
       :editProduct="editProduct"
       @send-product-save="isEditOrSave($event)"
     />
@@ -26,46 +28,46 @@
 import { Component, Vue } from "vue-property-decorator";
 import Product from "../services/product";
 import ListProducts from "../components/ListProducts.vue";
-import RegisterProduct from "../components/RegisterProduct.vue";
+import ModalProduct from "../components/ModalProduct.vue";
 import Loader from "../components/Loader.vue";
 import MessageSucess from "../components/messages/MessageSucess.vue";
+import { IProduct } from "../components/types";
 
 @Component({
   components: {
     ListProducts,
-    RegisterProduct,
+    ModalProduct,
     Loader,
     MessageSucess,
   },
 })
 export default class HomeView extends Vue {
-  private products = [];
-  public showRegister = false;
+  public products: Array<IProduct> = [];
+  public showModalProduct = false;
   public isLoading = false;
   public showSucessMessage = false;
   public msg = "";
-  public editProduct = [];
+  public editProduct!: IProduct;
 
   async mounted() {
     try {
       this.isLoading = true;
       const response = await Product.list();
       this.products = response.data;
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      alert(error);
     } finally {
       this.isLoading = false;
-      console.log(this.products);
     }
   }
-  public isEditOrSave(product) {
+  public isEditOrSave(product: IProduct) {
     if (product.id) {
       this.saveEditProduct(product);
     } else {
       this.saveProduct(product);
     }
   }
-  private async saveProduct(product) {
+  private async saveProduct(product: IProduct) {
     try {
       this.isLoading = true;
       this.showSucessMessage = false;
@@ -74,13 +76,13 @@ export default class HomeView extends Vue {
       this.showSucessMessage = true;
       this.msg = "Salvo";
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
-      this.showRegister = false;
+      this.showModalProduct = false;
       this.isLoading = false;
     }
   }
-  private async saveEditProduct(product: Array<any>) {
+  private async saveEditProduct(product: IProduct) {
     try {
       this.isLoading = true;
       this.showSucessMessage = false;
@@ -91,7 +93,7 @@ export default class HomeView extends Vue {
     } catch (error) {
       alert(error);
     } finally {
-      this.showRegister = false;
+      this.showModalProduct = false;
       this.isLoading = false;
     }
   }
@@ -109,10 +111,9 @@ export default class HomeView extends Vue {
       this.isLoading = false;
     }
   }
-
-  public openRegister(product: Array<any>) {
+  public openModalProduct(product: IProduct) {
     this.editProduct = product;
-    this.showRegister = true;
+    this.showModalProduct = true;
   }
   public closeSucessMessage() {
     this.showSucessMessage = false;

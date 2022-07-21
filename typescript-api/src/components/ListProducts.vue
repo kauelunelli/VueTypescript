@@ -26,7 +26,7 @@
 </template>
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
-import product from "../services/product";
+import { IProduct } from "./types";
 
 @Component
 export default class ListProducts extends Vue {
@@ -37,14 +37,14 @@ export default class ListProducts extends Vue {
       return [];
     },
   })
-  products!: Array<any>;
+  products!: Array<IProduct>;
   @Emit("send-id-to-delete")
   public sendIdToDelete(id: number) {
     return id;
   }
 
   @Emit("send-product-to-edit")
-  public sendProductToEdit(product: Array<any>) {
+  public sendProductToEdit(product: IProduct) {
     return product;
   }
 
