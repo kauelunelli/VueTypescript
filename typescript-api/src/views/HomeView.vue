@@ -72,7 +72,6 @@ export default class HomeView extends Vue {
       this.isLoading = true;
       this.showSucessMessage = false;
       const response = await Product.save(product);
-      console.log(response);
       this.showSucessMessage = true;
       this.msg = "Salvo";
     } catch (error) {
@@ -87,7 +86,6 @@ export default class HomeView extends Vue {
       this.isLoading = true;
       this.showSucessMessage = false;
       const resp = await Product.edit(product.id, product);
-      console.log(resp);
       this.showSucessMessage = true;
       this.msg = "Editado";
     } catch (error) {
@@ -102,7 +100,6 @@ export default class HomeView extends Vue {
       this.isLoading = true;
       this.showSucessMessage = false;
       const resp = await Product.delete(id);
-      console.log(resp);
       this.showSucessMessage = true;
       this.msg = "Deletado";
     } catch (error) {
