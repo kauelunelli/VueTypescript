@@ -60,7 +60,7 @@ export default class HomeView extends Vue {
       this.isLoading = false;
     }
   }
-  private isEditOrSave(product: IProduct) {
+  public isEditOrSave(product: IProduct) {
     if (product.id) {
       this.saveEditProduct(product);
     } else {
