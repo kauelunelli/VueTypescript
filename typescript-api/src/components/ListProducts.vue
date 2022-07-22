@@ -15,7 +15,7 @@
         <p>{{ product.brand }}</p>
         <p>{{ product.price }}</p>
         <div class="container-svg">
-          <a @click="sendProductToEdit(product)"><img :src="editSVG" /></a>
+          <a @click="sendProductToEdit(product.id)"><img :src="editSVG" /></a>
         </div>
         <div class="container-svg">
           <a @click="sendIdToDelete(product.id)"><img :src="deleteSVG" /></a>
@@ -37,15 +37,15 @@ export default class ListProducts extends Vue {
       return [];
     },
   })
-  products!: IProduct[];
+  products!: Array<IProduct>;
   @Emit("send-id-to-delete")
   public sendIdToDelete(id: number) {
     return id;
   }
 
   @Emit("send-product-to-edit")
-  public sendProductToEdit(product: IProduct) {
-    return product;
+  public sendProductToEdit(id: number) {
+    return id;
   }
 
   public editSVG = require("../assets/edit.svg");

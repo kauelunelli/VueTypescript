@@ -6,6 +6,10 @@ export default {
     return http.get<IProduct[]>("products");
   },
 
+  get: (id: number) => {
+    return http.get<IProduct>("products/" + id);
+  },
+
   save: (product: IProduct) => {
     return http.post("products", product);
   },

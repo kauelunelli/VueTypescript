@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="button-container">
-      <button class="btn" @click="openModalProduct">
+      <button class="btn" @click="openModalProduct()">
         Cadastrar Novo Produto
       </button>
     </div>
@@ -14,7 +14,7 @@
     <ListProducts
       :products="products"
       @send-id-to-delete="deleteProduct($event)"
-      @send-product-to-edit="openModalProduct($event)"
+      @send-product-to-edit="getProduct($event)"
     />
     <ModalProduct
       v-if="showModalProduct"
@@ -65,6 +65,17 @@ export default class HomeView extends Vue {
       this.saveEditProduct(product);
     } else {
       this.saveProduct(product);
+    }
+  }
+  public async getProduct(id: number) {
+    try {
+      this.isLoading = true;
+      const response = await Product.get(id);
+      this.openModalProduct(response.data);
+    } catch (error) {
+      alert(error);
+    } finally {
+      this.isLoading = false;
     }
   }
   private async saveProduct(product: IProduct) {
