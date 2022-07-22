@@ -10,7 +10,8 @@ import { Component, Prop, Vue, Emit } from "vue-property-decorator";
 
 @Component
 export default class MessageSucess extends Vue {
-  @Prop({ type: String, required: false, default: false}) readonly msg!: string;
+  @Prop({ type: String, required: false, default: false })
+  readonly msg!: string;
 
   @Emit("close-sucess-message")
   private closeSucessMessage() {
