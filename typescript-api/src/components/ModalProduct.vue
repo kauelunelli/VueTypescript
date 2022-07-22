@@ -69,7 +69,8 @@ import { Component, Prop, Emit, Vue } from "vue-property-decorator";
 import { IProduct } from "../types";
 @Component
 export default class ModalProduct extends Vue {
-  @Prop() readonly editProduct!: IProduct;
+  @Prop({ type: Object, required: true })
+  readonly editProduct!: IProduct;
 
   public product: IProduct = {
     product: "",

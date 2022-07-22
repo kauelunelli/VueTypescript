@@ -37,7 +37,7 @@ export default class ListProducts extends Vue {
       return [];
     },
   })
-  products!: Array<IProduct>;
+  products!: IProduct[];
   @Emit("send-id-to-delete")
   public sendIdToDelete(id: number) {
     return id;

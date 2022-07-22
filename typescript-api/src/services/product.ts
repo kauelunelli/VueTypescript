@@ -3,7 +3,7 @@ import { IProduct } from "../types";
 
 export default {
   list: () => {
-    return http.get("products");
+    return http.get<IProduct[]>("products");
   },
 
   save: (product: IProduct) => {
