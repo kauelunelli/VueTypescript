@@ -66,12 +66,12 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Emit, Vue } from "vue-property-decorator";
-import { IProduct } from "./types";
+import { IProduct } from "../types";
 @Component
 export default class ModalProduct extends Vue {
   @Prop() readonly editProduct!: IProduct;
 
-  private product: IProduct = {
+  public product: IProduct = {
     product: "",
     description: "",
     categories: "",
@@ -87,7 +87,7 @@ export default class ModalProduct extends Vue {
   }
 
   @Emit("send-product-save")
-  private sendProductToSave() {
+  public sendProductToSave() {
     return this.product;
   }
 }

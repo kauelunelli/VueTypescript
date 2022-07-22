@@ -13,9 +13,7 @@ export default class MessageSucess extends Vue {
   @Prop() readonly msg!: string;
 
   @Emit("close-sucess-message")
-  private closeSucessMessage() {
-    return;
-  }
+  private closeSucessMessage() {}
 }
 </script>
 <style scoped>

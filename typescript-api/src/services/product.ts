@@ -1,5 +1,5 @@
 import { http } from "./config";
-import { IProduct } from "../components/types";
+import { IProduct } from "../types";
 
 export default {
   list: () => {

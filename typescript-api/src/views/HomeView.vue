@@ -31,7 +31,7 @@ import ListProducts from "../components/ListProducts.vue";
 import ModalProduct from "../components/ModalProduct.vue";
 import Loader from "../components/Loader.vue";
 import MessageSucess from "../components/messages/MessageSucess.vue";
-import { IProduct } from "../components/types";
+import { IProduct } from "../types";
 
 @Component({
   components: {
@@ -60,7 +60,7 @@ export default class HomeView extends Vue {
       this.isLoading = false;
     }
   }
-  public isEditOrSave(product: IProduct) {
+  private isEditOrSave(product: IProduct) {
     if (product.id) {
       this.saveEditProduct(product);
     } else {
