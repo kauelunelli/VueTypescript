@@ -2,10 +2,9 @@ import { http } from "./config";
 import { IProduct } from "../types";
 
 export default {
-  list: () => {
-    return http.get<IProduct[]>("products");
+  list(): Promise<IProduct[]> {
+    return http.get("products");
   },
-
   get: (id: number) => {
     return http.get<IProduct>("products/" + id);
   },

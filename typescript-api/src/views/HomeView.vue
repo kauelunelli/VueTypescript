@@ -5,6 +5,9 @@
         Cadastrar Novo Produto
       </button>
     </div>
+    <div v-if="error">
+      <h1>Ocorreu um erro!</h1>
+    </div>
     <MessageSucess
       v-if="showSucessMessage"
       :msg="msg"
@@ -48,14 +51,17 @@ export default class HomeView extends Vue {
   public showSucessMessage = false;
   public msg = "";
   public editProduct!: IProduct;
+  public error = false;
 
   async mounted() {
     try {
       this.isLoading = true;
       const response = await Product.list();
+      console.log(response);
       this.products = response.data;
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.isLoading = false;
     }
@@ -74,6 +80,7 @@ export default class HomeView extends Vue {
       this.openModalProduct(response.data);
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.isLoading = false;
     }
@@ -87,6 +94,7 @@ export default class HomeView extends Vue {
       this.msg = "Salvo";
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.showModalProduct = false;
       this.isLoading = false;
@@ -101,6 +109,7 @@ export default class HomeView extends Vue {
       this.msg = "Editado";
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.showModalProduct = false;
       this.isLoading = false;
@@ -115,6 +124,7 @@ export default class HomeView extends Vue {
       this.msg = "Deletado";
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.isLoading = false;
     }
