@@ -17,7 +17,7 @@ export default {
     return http.post("products", product);
   },
 
-  edit: (id: number, product: IProduct) => {
+  edit(id: number, product: IProduct): Promise<IProductResponseObject> {
     return http.put("products/" + id, product);
   },
 
