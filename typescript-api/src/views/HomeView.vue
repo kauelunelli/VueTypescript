@@ -77,6 +77,7 @@ export default class HomeView extends Vue {
     try {
       this.isLoading = true;
       const response = await Product.get(id);
+      console.log(response);
       this.openModalProduct(response.data);
     } catch (error) {
       alert(error);

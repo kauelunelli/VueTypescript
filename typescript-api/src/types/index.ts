@@ -10,3 +10,11 @@ export interface IProduct {
   validity: string;
   temperature: string;
 }
+
+export interface IProductResponseArray {
+  data: IProduct[];
+}
+
+export interface IProductResponseObject {
+  data: IProduct;
+}

@@ -1,15 +1,19 @@
 import { http } from "./config";
-import { IProduct } from "../types";
+import {
+  IProduct,
+  IProductResponseArray,
+  IProductResponseObject,
+} from "../types";
 
 export default {
-  list(): Promise<IProduct[]> {
+  list(): Promise<IProductResponseArray> {
     return http.get("products");
   },
-  get: (id: number) => {
-    return http.get<IProduct>("products/" + id);
+  get(id: number): Promise<IProductResponseObject> {
+    return http.get("products/" + id);
   },
 
-  save: (product: IProduct) => {
+  save(product: IProduct): Promise<IProductResponseObject> {
     return http.post("products", product);
   },
 

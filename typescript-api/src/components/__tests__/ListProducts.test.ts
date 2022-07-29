@@ -1,6 +1,6 @@
-import { fireEvent, render } from "@testing-library/vue";
+import { findByText, fireEvent, render } from "@testing-library/vue";
 import ListProducts from "../ListProducts.vue";
-import { products, product } from "../../mocks/productsMock";
+import { products, product } from "@/mocks/productsMock";
 import "@testing-library/jest-dom";
 
 describe("<ListProducts>", () => {
@@ -11,10 +11,10 @@ describe("<ListProducts>", () => {
       },
     });
     expect(getByText("FakeProduct")).toBeVisible();
-    expect(getByText("FakeProduct2")).toBeVisible();
+    expect(getByText("FakeProduct1")).toBeVisible();
   });
-  it("should send the id to edit when is clicked", () => {
-    const { emitted, getByRole } = render(ListProducts, {
+  it("should send the id to edit when is clicked and show the product in modal", async () => {
+    const { emitted, getByRole, findByText } = render(ListProducts, {
       props: {
         products: product,
       },
@@ -23,6 +23,7 @@ describe("<ListProducts>", () => {
     const sendIdEdit = getByRole('editBtn');
     fireEvent.click(sendIdEdit);
     expect(emitted()["send-product-to-edit"]).toBeTruthy();
+    expect(await findByText("FakeProduct")).toBeVisible()
   });
   it("should send the id to delete when is clicked", () => {
     const { emitted, getByRole } = render(ListProducts, {
