@@ -15,12 +15,12 @@
         <p>{{ product.brand }}</p>
         <p>{{ product.price }}</p>
         <div class="container-svg">
-          <a role="editBtn" @click="sendProductToEdit(product.id)"
+          <a data-testid="editBtn" @click="sendProductToEdit(product.id)"
             ><img :src="editSVG"
           /></a>
         </div>
         <div class="container-svg">
-          <a role="deleteBtn" @click="sendIdToDelete(product.id)"
+          <a data-testid="deleteBtn" @click="sendIdToDelete(product.id)"
             ><img :src="deleteSVG"
           /></a>
         </div>

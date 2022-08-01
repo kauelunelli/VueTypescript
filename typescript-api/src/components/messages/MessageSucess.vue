@@ -1,5 +1,5 @@
 <template>
-  <div role="closeMessage" @click="closeSucessMessage" class="modal-message">
+  <div data-testid="closeMessage" @click="closeSucessMessage" class="modal-message">
     <div class="message">
       <h3 class="text-message">{{ msg }} com sucesso!</h3>
     </div>

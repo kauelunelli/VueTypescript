@@ -11,13 +11,13 @@ describe("<MessageSucess>", () => {
     expect(getByText("fake msg com sucesso!")).toBeTruthy();
   });
   it("should close the messsage when is clicked", () => {
-    const { emitted, getByRole } = render(MessageSucess, {
+    const { emitted, getByTestId } = render(MessageSucess, {
       props: {
         msg: "fake msg",
       },
     });
 
-    const closeMessage = getByRole("closeMessage");
+    const closeMessage = getByTestId("closeMessage");
     fireEvent.click(closeMessage);
     expect(emitted()["close-sucess-message"]).toBeTruthy();
   });
