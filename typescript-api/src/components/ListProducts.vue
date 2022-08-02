@@ -32,6 +32,7 @@
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 import { IProduct } from "../types";
 
+
 @Component
 export default class ListProducts extends Vue {
   @Prop({

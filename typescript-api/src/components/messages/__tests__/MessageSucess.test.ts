@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/vue";
 import MessageSucess from "../MessageSucess.vue";
+import "@testing-library/jest-dom";
 
 describe("<MessageSucess>", () => {
   it("should render page with given props", () => {
@@ -8,7 +9,7 @@ describe("<MessageSucess>", () => {
         msg: "fake msg",
       },
     });
-    expect(getByText("fake msg com sucesso!")).toBeTruthy();
+    expect(getByText("fake msg com sucesso!")).toBeVisible();
   });
   it("should close the messsage when is clicked", () => {
     const { emitted, getByTestId } = render(MessageSucess, {
