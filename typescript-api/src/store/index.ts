@@ -1,12 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
-  modules: {},
-});
+@Module
+export default class StoreMain extends VuexModule {
+ @Action
+
+}

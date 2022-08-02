@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit -c ./jest.config.js --env=jsdom-fourteen",
     "lint": "vue-cli-service lint",
     "test": "jest"
   },
@@ -47,7 +47,8 @@
     "sass-loader": "^12.0.0",
     "ts-jest": "^27.0.4",
     "typescript": "~4.5.5",
-    "vue-template-compiler": "^2.6.14"
+    "vue-template-compiler": "^2.6.14",
+    "vuex-module-decorators": "^2.0.0"
   },
   "include": [
     "./jest-setup.ts"
