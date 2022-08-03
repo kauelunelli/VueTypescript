@@ -31,18 +31,11 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 import { IProduct } from "../types";
-
+import { Products } from "../store/Products";
+import { getModule } from "vuex-module-decorators";
 
 @Component
 export default class ListProducts extends Vue {
-  @Prop({
-    type: Array,
-    required: true,
-    default: () => {
-      return [];
-    },
-  })
-  products!: Array<IProduct>;
   @Emit("send-id-to-delete")
   public sendIdToDelete(id: number) {
     return id;
@@ -52,9 +45,16 @@ export default class ListProducts extends Vue {
   public sendProductToEdit(id: number) {
     return id;
   }
-
   public editSVG = require("../assets/edit.svg");
   public deleteSVG = require("../assets/delete.svg");
+  public products: Array<IProduct> = [];
+  public productModule = getModule(Products);
+
+  
+  async mounted() {
+    await this.productModule.featchProducts();
+    this.products = this.productModule.AllProducts;
+  }
 }
 </script>
 <style scoped>

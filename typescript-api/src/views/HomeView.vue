@@ -35,6 +35,9 @@ import ModalProduct from "../components/ModalProduct.vue";
 import Loader from "../components/Loader.vue";
 import MessageSucess from "../components/messages/MessageSucess.vue";
 import { IProduct } from "../types";
+import { Products } from "../store/Products";
+import { getModule } from "vuex-module-decorators";
+
 
 @Component({
   components: {
@@ -45,26 +48,14 @@ import { IProduct } from "../types";
   },
 })
 export default class HomeView extends Vue {
-  public products: Array<IProduct> = [];
   public showModalProduct = false;
   public isLoading = false;
   public showSucessMessage = false;
   public msg = "";
   public editProduct!: IProduct;
   public error = false;
+  public productModule = getModule(Products);
 
-  async mounted() {
-    try {
-      this.isLoading = true;
-      const response = await Product.list();
-      this.products = response.data;
-    } catch (error) {
-      alert(error);
-      this.error = true;
-    } finally {
-      this.isLoading = false;
-    }
-  }
   public isEditOrSave(product: IProduct) {
     if (product.id) {
       this.saveEditProduct(product);

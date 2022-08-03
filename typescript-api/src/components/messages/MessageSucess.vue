@@ -1,5 +1,9 @@
 <template>
-  <div data-testid="closeMessage" @click="closeSucessMessage" class="modal-message">
+  <div
+    data-testid="closeMessage"
+    @click="closeSucessMessage"
+    class="modal-message"
+  >
     <div class="message">
       <h3 class="text-message">{{ msg }} com sucesso!</h3>
     </div>
@@ -19,6 +23,7 @@ export default class MessageSucess extends Vue {
   }
 }
 </script>
+
 <style scoped>
 .modal-message {
   top: 0;
@@ -28,8 +33,8 @@ export default class MessageSucess extends Vue {
 .message {
   animation: scale-up-center 1s;
   background: rgb(167, 221, 167);
-  padding: 5px;
   border-radius: 5px;
+  padding: 5px;
   display: grid;
   justify-content: center;
   text-align: center;
