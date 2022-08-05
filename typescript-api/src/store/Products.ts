@@ -81,7 +81,7 @@ export class Products extends VuexModule {
   }
 
   @Action
-  async fetchProducts() {
+  public async fetchProducts() {
     this.context.commit("SET_LOADING_STATUS", true);
     try {
       const products = await Product.list();
@@ -93,7 +93,7 @@ export class Products extends VuexModule {
     }
   }
   @Action
-  async fetchEditProduct(id: number) {
+  public async fetchEditProduct(id: number) {
     try {
       this.context.commit("SET_LOADING_STATUS", true);
       const editProduct = await Product.get(id);
