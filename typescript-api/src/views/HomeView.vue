@@ -8,16 +8,10 @@
     <div v-if="productModule.Error">
       <h1>Ocorreu um erro!</h1>
     </div>
-    <MessageSucess
-      v-if="showSucessMessage"
-      :msg="msg"
-      @close-sucess-message="closeSucessMessage"
-    />
+    <MessageSucess v-if="productModule.Message.showMessage" />
     <Loader v-if="productModule.Loading" />
     <ListProducts @send-id-to-delete="deleteProduct($event)" />
-    <ModalProduct
-      v-if="productModule.ShowModal"
-    />
+    <ModalProduct v-if="productModule.ShowModal" />
   </div>
 </template>
 
@@ -40,17 +34,16 @@ import { getModule } from "vuex-module-decorators";
   },
 })
 export default class HomeView extends Vue {
-  public showSucessMessage = false;
-  public msg = "";
   public productModule = getModule(Products);
 
   public async deleteProduct(id: number) {
     try {
       this.productModule.context.commit("SET_LOADING_STATUS", true);
-      this.showSucessMessage = false;
       await Product.delete(id);
-      this.showSucessMessage = true;
-      this.msg = "Deletado";
+      this.productModule.context.commit("SET_MESSAGE_STATUS", {
+        showMessage: true,
+        msg: "Deletado",
+      });
     } catch (error) {
       alert(error);
       this.productModule.context.commit("SET_ERROR_STATUS", true);
@@ -59,10 +52,8 @@ export default class HomeView extends Vue {
     }
   }
   public openModalProduct() {
+    this.productModule.context.commit("SET_EDIT_PRODUCT", []);
     this.productModule.context.commit("SET_MODAL_STATUS", true);
-  }
-  public closeSucessMessage() {
-    this.showSucessMessage = false;
   }
 }
 </script>

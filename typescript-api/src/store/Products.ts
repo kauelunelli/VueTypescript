@@ -1,13 +1,11 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import { IProduct } from "@/types/index";
+import { IProduct, IMessage } from "@/types/index";
 import Product from "@/services/product";
 import store from "./index";
 
 @Module({ name: "Products", dynamic: true, store })
 export class Products extends VuexModule {
   products: IProduct[] = [];
-  isLoading = false;
-  error = false;
   editProduct: IProduct = {
     product: "",
     description: "",
@@ -19,8 +17,13 @@ export class Products extends VuexModule {
     validity: "",
     temperature: "",
   };
+  message: IMessage = {
+    showMessage: false,
+    msg: "",
+  };
+  isLoading = false;
+  error = false;
   showModal = false;
-  showMessage = false;
 
   get Products() {
     return this.products;
@@ -40,6 +43,10 @@ export class Products extends VuexModule {
 
   get ShowModal() {
     return this.showModal;
+  }
+
+  get Message() {
+    return this.message;
   }
 
   @Mutation
@@ -68,9 +75,10 @@ export class Products extends VuexModule {
   }
 
   @Mutation
-  SET_MESSAGE_STATUS(status: boolean, msg: string) {
-    this.showMessage = status;
-    this.msg = msg
+  SET_MESSAGE_STATUS(info: IMessage) {
+    this.message.showMessage = info.showMessage;
+    this.message.msg = info.msg;
+    console.log(this.message.msg);
   }
 
   @Action

@@ -102,8 +102,10 @@ export default class ModalProduct extends Vue {
       this.productModule.context.commit("SET_LOADING_STATUS", true);
       this.productModule.context.commit("SET_MODAL_STATUS", false);
       await Product.save(this.product);
-      this.showSucessMessage = true;
-      this.msg = "Salvo";
+      this.productModule.context.commit("SET_MESSAGE_STATUS", {
+        showMessage: true,
+        msg: "Salvo",
+      });
     } catch (error) {
       alert(error);
       this.productModule.context.commit("SET_ERROR_STATUS", true);
@@ -117,8 +119,10 @@ export default class ModalProduct extends Vue {
       this.productModule.context.commit("SET_LOADING_STATUS", true);
       this.productModule.context.commit("SET_MODAL_STATUS", false);
       await Product.edit(this.product.id, this.product);
-      this.showSucessMessage = true;
-      this.msg = "Editado";
+      this.productModule.context.commit("SET_MESSAGE_STATUS", {
+        showMessage: true,
+        msg: "Editado",
+      });
     } catch (error) {
       alert(error);
       this.productModule.context.commit("SET_ERROR_STATUS", true);

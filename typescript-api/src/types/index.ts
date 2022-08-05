@@ -18,3 +18,8 @@ export interface IProductResponseArray {
 export interface IProductResponseObject {
   data: IProduct;
 }
+
+export interface IMessage {
+  showMessage: boolean;
+  msg: string
+}
