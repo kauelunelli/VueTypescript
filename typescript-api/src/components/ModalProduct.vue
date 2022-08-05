@@ -60,25 +60,20 @@
           placeholder="Temperatura"
         />
       </div>
-      <button @click="sendProductToSave">Salvar</button>
+      <button @click="isEditOrSave">Salvar</button>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Emit, Vue } from "vue-property-decorator";
+import { Component, Emit, Vue } from "vue-property-decorator";
 import { IProduct } from "../types";
+import { Products } from "../store/Products";
+import Product from "../services/product";
+import { getModule } from "vuex-module-decorators";
 
 @Component
 export default class ModalProduct extends Vue {
-  @Prop({
-    type: Object,
-    required: false,
-    default: () => {
-      return {};
-    },
-  })
-  readonly editProduct!: IProduct;
-
+  public productModule = getModule(Products);
   public product: IProduct = {
     product: "",
     description: "",
@@ -91,12 +86,46 @@ export default class ModalProduct extends Vue {
     temperature: "",
   };
   private mounted() {
-    this.product = this.editProduct;
+    this.product = this.productModule.EditProduct;
   }
 
-  @Emit("send-product-save")
-  public sendProductToSave() {
-    return this.product;
+  public isEditOrSave() {
+    if (this.product.id) {
+      this.saveEditProduct();
+    } else {
+      this.saveProduct();
+    }
+  }
+
+  private async saveProduct() {
+    try {
+      this.productModule.context.commit("SET_LOADING_STATUS", true);
+      this.productModule.context.commit("SET_MODAL_STATUS", false);
+      await Product.save(this.product);
+      this.showSucessMessage = true;
+      this.msg = "Salvo";
+    } catch (error) {
+      alert(error);
+      this.productModule.context.commit("SET_ERROR_STATUS", true);
+    } finally {
+      this.productModule.context.commit("SET_MODAL_STATUS", false);
+      this.productModule.context.commit("SET_LOADING_STATUS", false);
+    }
+  }
+  private async saveEditProduct() {
+    try {
+      this.productModule.context.commit("SET_LOADING_STATUS", true);
+      this.productModule.context.commit("SET_MODAL_STATUS", false);
+      await Product.edit(this.product.id, this.product);
+      this.showSucessMessage = true;
+      this.msg = "Editado";
+    } catch (error) {
+      alert(error);
+      this.productModule.context.commit("SET_ERROR_STATUS", true);
+    } finally {
+      this.productModule.context.commit("SET_MODAL_STATUS", false);
+      this.productModule.context.commit("SET_LOADING_STATUS", false);
+    }
   }
 }
 </script>
