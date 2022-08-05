@@ -5,6 +5,9 @@
         Cadastrar Novo Produto
       </button>
     </div>
+    <div v-if="error">
+      <h1>Ocorreu um erro!</h1>
+    </div>
     <MessageSucess
       v-if="showSucessMessage"
       :msg="msg"
@@ -48,6 +51,7 @@ export default class HomeView extends Vue {
   public showSucessMessage = false;
   public msg = "";
   public editProduct!: IProduct;
+  public error = false;
 
   async mounted() {
     try {
@@ -56,6 +60,7 @@ export default class HomeView extends Vue {
       this.products = response.data;
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.isLoading = false;
     }
@@ -74,6 +79,7 @@ export default class HomeView extends Vue {
       this.openModalProduct(response.data);
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.isLoading = false;
     }
@@ -82,11 +88,12 @@ export default class HomeView extends Vue {
     try {
       this.isLoading = true;
       this.showSucessMessage = false;
-      const response = await Product.save(product);
+      await Product.save(product);
       this.showSucessMessage = true;
       this.msg = "Salvo";
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.showModalProduct = false;
       this.isLoading = false;
@@ -96,11 +103,12 @@ export default class HomeView extends Vue {
     try {
       this.isLoading = true;
       this.showSucessMessage = false;
-      const resp = await Product.edit(product.id, product);
+      await Product.edit(product.id, product);
       this.showSucessMessage = true;
       this.msg = "Editado";
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.showModalProduct = false;
       this.isLoading = false;
@@ -110,11 +118,12 @@ export default class HomeView extends Vue {
     try {
       this.isLoading = true;
       this.showSucessMessage = false;
-      const resp = await Product.delete(id);
+      await Product.delete(id);
       this.showSucessMessage = true;
       this.msg = "Deletado";
     } catch (error) {
       alert(error);
+      this.error = true;
     } finally {
       this.isLoading = false;
     }

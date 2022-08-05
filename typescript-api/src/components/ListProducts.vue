@@ -15,10 +15,14 @@
         <p>{{ product.brand }}</p>
         <p>{{ product.price }}</p>
         <div class="container-svg">
-          <a @click="sendProductToEdit(product.id)"><img :src="editSVG" /></a>
+          <a data-testid="editBtn" @click="sendProductToEdit(product.id)"
+            ><img :src="editSVG"
+          /></a>
         </div>
         <div class="container-svg">
-          <a @click="sendIdToDelete(product.id)"><img :src="deleteSVG" /></a>
+          <a data-testid="deleteBtn" @click="sendIdToDelete(product.id)"
+            ><img :src="deleteSVG"
+          /></a>
         </div>
       </div>
     </div>
@@ -27,6 +31,7 @@
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 import { IProduct } from "../types";
+
 
 @Component
 export default class ListProducts extends Vue {
