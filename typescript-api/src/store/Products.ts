@@ -78,7 +78,6 @@ export class Products extends VuexModule {
   SET_MESSAGE_STATUS(info: IMessage) {
     this.message.showMessage = info.showMessage;
     this.message.msg = info.msg;
-    console.log(this.message.msg);
   }
 
   @Action
