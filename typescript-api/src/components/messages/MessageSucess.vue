@@ -1,24 +1,32 @@
 <template>
-  <div data-testid="closeMessage" @click="closeSucessMessage" class="modal-message">
+  <div
+    data-testid="closeMessage"
+    @click="closeSucessMessage"
+    class="modal-message"
+  >
     <div class="message">
-      <h3 class="text-message">{{ msg }} com sucesso!</h3>
+      <h3 class="text-message">{{ productModule.Message.msg }} com sucesso!</h3>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue, Emit } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
+import { getModule } from "vuex-module-decorators";
+import { Products } from "../../store/Products";
 
 @Component
 export default class MessageSucess extends Vue {
-  @Prop({ type: String, required: true })
-  readonly msg!: string;
+  public productModule = getModule(Products);
 
-  @Emit("close-sucess-message")
   public closeSucessMessage() {
-    return;
+    this.productModule.context.commit("SET_MESSAGE_STATUS", {
+      state: false,
+      msg: "",
+    });
   }
 }
 </script>
+
 <style scoped>
 .modal-message {
   top: 0;
@@ -28,8 +36,8 @@ export default class MessageSucess extends Vue {
 .message {
   animation: scale-up-center 1s;
   background: rgb(167, 221, 167);
-  padding: 5px;
   border-radius: 5px;
+  padding: 5px;
   display: grid;
   justify-content: center;
   text-align: center;

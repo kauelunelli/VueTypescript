@@ -1,29 +1,17 @@
 <template>
   <div class="home">
     <div class="button-container">
-      <button class="btn" @click="openModalProduct()">
+      <button class="btn" @click="openModalProduct">
         Cadastrar Novo Produto
       </button>
     </div>
-    <div v-if="error">
+    <div v-if="productModule.Error">
       <h1>Ocorreu um erro!</h1>
     </div>
-    <MessageSucess
-      v-if="showSucessMessage"
-      :msg="msg"
-      @close-sucess-message="closeSucessMessage"
-    />
-    <Loader v-if="isLoading" />
-    <ListProducts
-      :products="products"
-      @send-id-to-delete="deleteProduct($event)"
-      @send-product-to-edit="getProduct($event)"
-    />
-    <ModalProduct
-      v-if="showModalProduct"
-      :editProduct="editProduct"
-      @send-product-save="isEditOrSave($event)"
-    />
+    <MessageSucess v-if="productModule.Message.showMessage" />
+    <Loader v-if="productModule.Loading" />
+    <ListProducts @send-id-to-delete="deleteProduct($event)" />
+    <ModalProduct v-if="productModule.ShowModal" />
   </div>
 </template>
 
@@ -34,7 +22,8 @@ import ListProducts from "../components/ListProducts.vue";
 import ModalProduct from "../components/ModalProduct.vue";
 import Loader from "../components/Loader.vue";
 import MessageSucess from "../components/messages/MessageSucess.vue";
-import { IProduct } from "../types";
+import { Products } from "../store/Products";
+import { getModule } from "vuex-module-decorators";
 
 @Component({
   components: {
@@ -45,95 +34,26 @@ import { IProduct } from "../types";
   },
 })
 export default class HomeView extends Vue {
-  public products: Array<IProduct> = [];
-  public showModalProduct = false;
-  public isLoading = false;
-  public showSucessMessage = false;
-  public msg = "";
-  public editProduct!: IProduct;
-  public error = false;
+  public productModule = getModule(Products);
 
-  async mounted() {
-    try {
-      this.isLoading = true;
-      const response = await Product.list();
-      this.products = response.data;
-    } catch (error) {
-      alert(error);
-      this.error = true;
-    } finally {
-      this.isLoading = false;
-    }
-  }
-  public isEditOrSave(product: IProduct) {
-    if (product.id) {
-      this.saveEditProduct(product);
-    } else {
-      this.saveProduct(product);
-    }
-  }
-  public async getProduct(id: number) {
-    try {
-      this.isLoading = true;
-      const response = await Product.get(id);
-      this.openModalProduct(response.data);
-    } catch (error) {
-      alert(error);
-      this.error = true;
-    } finally {
-      this.isLoading = false;
-    }
-  }
-  private async saveProduct(product: IProduct) {
-    try {
-      this.isLoading = true;
-      this.showSucessMessage = false;
-      await Product.save(product);
-      this.showSucessMessage = true;
-      this.msg = "Salvo";
-    } catch (error) {
-      alert(error);
-      this.error = true;
-    } finally {
-      this.showModalProduct = false;
-      this.isLoading = false;
-    }
-  }
-  private async saveEditProduct(product: IProduct) {
-    try {
-      this.isLoading = true;
-      this.showSucessMessage = false;
-      await Product.edit(product.id, product);
-      this.showSucessMessage = true;
-      this.msg = "Editado";
-    } catch (error) {
-      alert(error);
-      this.error = true;
-    } finally {
-      this.showModalProduct = false;
-      this.isLoading = false;
-    }
-  }
   public async deleteProduct(id: number) {
     try {
-      this.isLoading = true;
-      this.showSucessMessage = false;
+      this.productModule.context.commit("SET_LOADING_STATUS", true);
       await Product.delete(id);
-      this.showSucessMessage = true;
-      this.msg = "Deletado";
+      this.productModule.context.commit("SET_MESSAGE_STATUS", {
+        showMessage: true,
+        msg: "Deletado",
+      });
     } catch (error) {
       alert(error);
-      this.error = true;
+      this.productModule.context.commit("SET_ERROR_STATUS", true);
     } finally {
-      this.isLoading = false;
+      this.productModule.context.commit("SET_LOADING_STATUS", false);
     }
   }
-  public openModalProduct(product: IProduct) {
-    this.editProduct = product;
-    this.showModalProduct = true;
-  }
-  public closeSucessMessage() {
-    this.showSucessMessage = false;
+  public openModalProduct() {
+    this.productModule.context.commit("SET_EDIT_PRODUCT", []);
+    this.productModule.context.commit("SET_MODAL_STATUS", true);
   }
 }
 </script>

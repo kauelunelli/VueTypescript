@@ -8,7 +8,11 @@
         <p>Marca</p>
         <p>Preço</p>
       </div>
-      <div class="container-list" v-for="product in products" :key="product.id">
+      <div
+        class="container-list"
+        v-for="product in productModule.Products"
+        :key="product.id"
+      >
         <p>{{ product.product }}</p>
         <p>{{ product.description }}</p>
         <p>{{ product.categories }}</p>
@@ -29,32 +33,27 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from "vue-property-decorator";
-import { IProduct } from "../types";
-
+import { Component, Emit, Vue } from "vue-property-decorator";
+import { Products } from "../store/Products";
+import { getModule } from "vuex-module-decorators";
 
 @Component
 export default class ListProducts extends Vue {
-  @Prop({
-    type: Array,
-    required: true,
-    default: () => {
-      return [];
-    },
-  })
-  products!: Array<IProduct>;
   @Emit("send-id-to-delete")
   public sendIdToDelete(id: number) {
     return id;
   }
 
-  @Emit("send-product-to-edit")
-  public sendProductToEdit(id: number) {
-    return id;
-  }
-
   public editSVG = require("../assets/edit.svg");
   public deleteSVG = require("../assets/delete.svg");
+  public productModule = getModule(Products);
+
+  async mounted() {
+    await this.productModule.fetchProducts();
+  }
+  async sendProductToEdit(id: number) {
+    await this.productModule.fetchEditProduct(id);
+  }
 }
 </script>
 <style scoped>
