@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/vue";
-import HomeView from "../HomeView.vue";
+import HomeView from "./HomeView.vue";
 import "@testing-library/jest-dom";
 import Product from "@/services/product";
 import { products, productObject } from "@/mocks/productsMock";

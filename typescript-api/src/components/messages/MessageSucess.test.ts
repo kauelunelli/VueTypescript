@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/vue";
-import MessageSucess from "../MessageSucess.vue";
+import MessageSucess from "./MessageSucess.vue";
 import "@testing-library/jest-dom";
 
 describe("<MessageSucess>", () => {

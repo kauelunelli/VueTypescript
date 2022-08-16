@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/vue";
-import ListProducts from "../ListProducts.vue";
+import ListProducts from "./ListProducts.vue";
 import { products, product } from "@/mocks/productsMock";
 import "@testing-library/jest-dom";
 

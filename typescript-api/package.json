@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit -c ./jest.config.js --env=jsdom-fourteen",
+    "test:unit": "vue-cli-service test:unit -c ./jest.config.js",
     "lint": "vue-cli-service lint",
     "test": "jest"
   },
