@@ -99,7 +99,6 @@ export class Products extends VuexModule {
     } catch (error) {
       this.context.commit("SET_ERROR_STATUS", true);
     } finally {
-      console.log("created");
       this.context.commit("SET_LOADING_STATUS", false);
     }
   }
