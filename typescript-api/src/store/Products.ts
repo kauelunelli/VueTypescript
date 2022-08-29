@@ -24,6 +24,7 @@ export class Products extends VuexModule {
   isLoading = false;
   error = false;
   showModal = false;
+  showModalCookies = false;
 
   get Products() {
     return this.products;
@@ -47,6 +48,10 @@ export class Products extends VuexModule {
 
   get Message() {
     return this.message;
+  }
+
+  get ShowModalCookies() {
+    return this.showModalCookies;
   }
 
   @Mutation
@@ -78,6 +83,11 @@ export class Products extends VuexModule {
   SET_MESSAGE_STATUS(info: IMessage) {
     this.message.showMessage = info.showMessage;
     this.message.msg = info.msg;
+  }
+
+  @Mutation
+  SET_MODAL_COOKIES(status: boolean) {
+    this.showModalCookies = status;
   }
 
   @Action

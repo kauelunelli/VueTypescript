@@ -22,6 +22,7 @@ import ListProducts from "../components/ListProducts.vue";
 import ModalProduct from "../components/ModalProduct.vue";
 import Loader from "../components/Loader.vue";
 import MessageSucess from "../components/messages/MessageSucess.vue";
+import ModalCookies from "../components/ModalCookies.vue";
 import { Products } from "../store/Products";
 import { getModule } from "vuex-module-decorators";
 
@@ -35,6 +36,10 @@ import { getModule } from "vuex-module-decorators";
 })
 export default class HomeView extends Vue {
   public productModule = getModule(Products);
+
+  mounted() {
+    this.productModule.context.commit("SET_MODAL_COOKIES", true);
+  }
 
   public async deleteProduct(id: number) {
     try {
