@@ -48,9 +48,10 @@ export default class ListProducts extends Vue {
   public deleteSVG = require("../assets/delete.svg");
   public productModule = getModule(Products);
 
-  async mounted() {
+  async created() {
     await this.productModule.fetchProducts();
   }
+
   async sendProductToEdit(id: number) {
     await this.productModule.fetchEditProduct(id);
   }

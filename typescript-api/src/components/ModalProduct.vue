@@ -65,7 +65,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Emit, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { IProduct } from "../types";
 import { Products } from "../store/Products";
 import Product from "../services/product";
